@@ -13,12 +13,11 @@ def one_hot_encoding(X: pd.DataFrame) -> pd.DataFrame:
     pass
 
 def check_ifreal(y: pd.Series) -> bool:
-    """
-    Function to check if the given series has real or discrete values
-    """
-
-    pass
-
+    threshold = 10
+    if not pd.api.types.is_numeric_dtype(y): return False
+    else :
+        if (y.nunique() > threshold): return True
+        else return False
 
 def entropy(Y: pd.Series) -> float:
     class_counts = Y.value_counts()
@@ -37,14 +36,21 @@ def gini_index(Y: pd.Series) -> float:
     return gini_value
 
 def information_gain(Y: pd.Series, attr: pd.Series, criterion: str) -> float:
-    """
-    Function to calculate the information gain using criterion (entropy, gini index or MSE)
-    """
-
-    pass
-
-
+    initial_impurity = gini_index(Y) if (criterion == 'gini_index') else entropy(Y) 
+    weighted_impurity = 0
+    class_values = attr.unique()
+    for value in class_values:
+        child_Y = Y[attr == value]
+        weight = len(child_Y) / len(Y)
+        child_impurity = gini_index(child_Y) if (criterion == 'gini_index') else entropy(child_Y)
+        weighted_impurity += child_impurity * weight
+    info_gain = initial_impurity - weighted_impurity
+    return info_gain
+    
 def opt_split_attribute(X: pd.DataFrame, y: pd.Series, criterion, features: pd.Series):
+    max_info_gain = -1
+    best_attr = None
+    for attr in features
     """
     Function to find the optimal attribute to split about.
     If needed you can split this function into 2, one for discrete and one for real valued features.
