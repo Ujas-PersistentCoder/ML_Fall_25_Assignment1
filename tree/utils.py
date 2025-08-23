@@ -36,21 +36,60 @@ def gini_index(Y: pd.Series) -> float:
     return gini_value
 
 def information_gain(Y: pd.Series, attr: pd.Series, criterion: str) -> float:
-    initial_impurity = gini_index(Y) if (criterion == 'gini_index') else entropy(Y) 
-    weighted_impurity = 0
-    class_values = attr.unique()
-    for value in class_values:
-        child_Y = Y[attr == value]
-        weight = len(child_Y) / len(Y)
-        child_impurity = gini_index(child_Y) if (criterion == 'gini_index') else entropy(child_Y)
-        weighted_impurity += child_impurity * weight
-    info_gain = initial_impurity - weighted_impurity
-    return info_gain
+    is_output_real = check_ifreal(Y)
+    if (is_output_real):
+        y_mean = Y.mean()
+        initial_mse = ((Y - y_mean) ** 2).mean()
+        weighted_mse = 0.0
+        unique_values = attr.unique()
+        for value in unique_values:
+            child_Y = Y[attr == value]
+            if len(child_Y):
+                weight = len(child_Y) / len(Y)
+                child_mean = child_Y.mean()
+                child_mse = ((child_Y - child_mean) ** 2).mean()
+                weighted_mse += weight * child_mse
+        return initial_mse - weighted_mse
+    else:
+        initial_impurity = gini_index(Y) if (criterion == 'gini_index') else entropy(Y) 
+        weighted_impurity = 0.0
+        class_values = attr.unique()
+        for value in class_values:
+            child_Y = Y[attr == value]
+            weight = len(child_Y) / len(Y)
+            child_impurity = gini_index(child_Y) if (criterion == 'gini_index') else entropy(child_Y)
+            weighted_impurity += child_impurity * weight
+        info_gain = initial_impurity - weighted_impurity
+        return info_gain
     
 def opt_split_attribute(X: pd.DataFrame, y: pd.Series, criterion, features: pd.Series):
-    max_info_gain = -1
+    max_info_gain = -1.0
     best_attr = None
-    for attr in features
+    best_split_value = None
+    for attr in features:
+        is_real = check_ifreal(X[attr])
+        if is_real:
+            unique_values = sorted(X[attr].unique())
+            best_ig_attr = -1.0
+            best_threshold_attr = None
+            for i in range(len(unique_values) - 1):
+                threshold = (unique_values[i] + unique_values[i+1]) / 2
+                temp_split = X[attr] <= threshold
+                curr_ig = information_gain(y, temp_split, criterion)
+                if curr_ig > best_ig_attr:
+                    best_ig_attr = curr_ig
+                    best_threshold_attr = threshold
+            if best_ig_attr > max_info_gain:
+                best_attr = attr
+                best_split_value = best_threshold_attr
+                max_info_gain = best_ig_attr
+        else:
+            info_gain = information_gain(y, X[attr], criterion)
+            if (info_gain > max_info_gain):
+                max_info_gain = info_gain
+                best_attr = attr
+                best_split_value = None
+    return best_attr, best_split_value
     """
     Function to find the optimal attribute to split about.
     If needed you can split this function into 2, one for discrete and one for real valued features.
