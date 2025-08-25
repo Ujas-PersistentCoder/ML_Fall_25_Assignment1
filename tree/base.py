@@ -44,6 +44,13 @@ class DecisionTree:
         else:
             features = list(X.columns)
             best_feature, best_value = opt_split_attribute(X, y, self.criterion, features)
+            current_node = Node()
+            current_node.feature = best_feature
+            current_node.threshold = best_value
+            X_left, y_left, X_right, y_right = split_data(X, y, best_feature, best_value)
+            current_node.left_child = self._grow_tree(X_left, y_left, depth+1)
+            current_node.right_child = self._grow_tree(X_right, y_right, depth+1)
+            return current_node
 
     def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
         """
