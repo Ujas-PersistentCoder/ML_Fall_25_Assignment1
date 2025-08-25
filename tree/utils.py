@@ -6,11 +6,7 @@ import numpy as np #included numpy to use functions like log
 import pandas as pd
 
 def one_hot_encoding(X: pd.DataFrame) -> pd.DataFrame:
-    """
-    Function to perform one hot encoding on the input data
-    """
-
-    pass
+    return pd.get_dummies(X)
 
 def check_ifreal(y: pd.Series) -> bool:
     threshold = 10
@@ -102,10 +98,20 @@ def opt_split_attribute(X: pd.DataFrame, y: pd.Series, criterion, features: pd.S
 
     # According to wheather the features are real or discrete valued and the criterion, find the attribute from the features series with the maximum information gain (entropy or varinace based on the type of output) or minimum gini index (discrete output).
 
-    pass
-
-
 def split_data(X: pd.DataFrame, y: pd.Series, attribute, value):
+    attr_isreal = check_ifreal(X[attribute])
+    if attr_isreal:
+        left_mask = X[attribute] <= value
+        right_mask = X[attribute] > value
+    else:
+        left_mask = X[attribute] == value
+        right_mask = X[attribute] != value
+    X_left= X[left_mask]
+    y_left = y[left_mask]
+    X_right = X[right_mask]
+    y_right = y[right_mask]
+    return X_left, y_left, X_right, y_right
+            
     """
     Funtion to split the data according to an attribute.
     If needed you can split this function into 2, one for discrete and one for real valued features.
