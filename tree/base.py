@@ -8,7 +8,6 @@ You will be expected to use this to make trees for:
 """
 from dataclasses import dataclass
 from typing import Literal
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -16,7 +15,15 @@ from tree.utils import *
 
 np.random.seed(42)
 
-
+class Node:
+    def __init__(self, value = None):
+        self.value = value #for leaf node
+        #for decision nodes
+        self.feature = None
+        self.threshold = None
+        self.left_child = None
+        self.right_child = None
+        
 @dataclass
 class DecisionTree:
     criterion: Literal["information_gain", "gini_index"]  # criterion won't be used for regression
@@ -25,6 +32,18 @@ class DecisionTree:
     def __init__(self, criterion, max_depth=5):
         self.criterion = criterion
         self.max_depth = max_depth
+
+    def _grow_tree(self, X, y, depth = 0): #helper function, only for interanl function
+        if (depth >= self.max_depth or len(y.unique())==1 or len(X) < 2):
+            output_isreal = check_ifreal(y)
+            if output_isreal:
+                leaf_value = y.mean()
+            else: 
+                leaf_value = y.mode()[0]
+            return Node(value = leaf_value)
+        else:
+            features = list(X.columns)
+            best_feature, best_value = opt_split_attribute(X, y, self.criterion, features)
 
     def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
         """
