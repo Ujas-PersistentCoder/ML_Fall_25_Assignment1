@@ -31,4 +31,10 @@ for cls in y_test.unique():
     p = precision(y_hat, y_test, cls)
     r = recall(y_hat, y_test, cls)
     print(f"Class {cls} - Precision: {p:.2f}, Recall: {r:.2f}") 
+#sample results:
+""" Results for Part(a)
+Accuracy : 0.87
+Class 0 - Precision: 0.81, Recall: 0.93
+Class 1 - Precision: 0.93, Recall: 0.81 """
+
 
