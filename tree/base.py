@@ -35,7 +35,7 @@ class DecisionTree:
         self.max_depth = max_depth
 
     def _grow_tree(self, X, y, depth = 0): #helper function, only for interanl function
-        if (depth >= self.max_depth or len(y.unique())==1 or len(X) < 2):
+        if (depth >= self.max_depth or len(y.unique())==1 or X.shape[0] < 2):
             output_isreal = check_ifreal(y)
             if output_isreal:
                 leaf_value = y.mean()
@@ -55,7 +55,7 @@ class DecisionTree:
             return current_node
 
     def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
-        self.root = self._grow_tree(self, X, y)
+        self.root = self._grow_tree(X, y)
 
         # If you wish your code can have cases for different types of input and output data (discrete, real)
         # Use the functions from utils.py to find the optimal attribute to split upon and then construct the tree accordingly.
