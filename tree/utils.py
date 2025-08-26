@@ -18,7 +18,8 @@ def check_ifreal(y: pd.Series) -> bool:
 def entropy(Y: pd.Series) -> float:
     class_counts = Y.value_counts()
     probs = class_counts / len(Y)
-    entropy_value = (-probs * np.log2(probs)).sum()
+    epsilon = 1e-9 #to avoid log0
+    entropy_value = (-probs * np.log2(probs + epsilon)).sum()
     return entropy_value
 
 #Though gini_index and entropy serve the same purpose and would mostly give the same splits, gini index is faster due to the abscence of log and works on just simple squaring
