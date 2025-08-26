@@ -80,11 +80,19 @@ def opt_split_attribute(X: pd.DataFrame, y: pd.Series, criterion, features: pd.S
                 best_split_value = best_threshold_attr
                 max_info_gain = best_ig_attr
         else:
-            info_gain = information_gain(y, X[attr], criterion)
-            if (info_gain > max_info_gain):
-                max_info_gain = info_gain
+            best_infogain = -1
+            best_value = None
+            classes = X[attr].unique()
+            for feat in classes:
+                temp_split = (X[attr] == feat)
+                curr_infogain = information_gain(y, temp_split, criterion)
+                if (curr_infogain > best_infogain):
+                    best_infogain = curr_infogain
+                    best_value = feat
+            if (best_infogain > max_info_gain):
                 best_attr = attr
-                best_split_value = None
+                best_split_value = best_value
+                max_info_gain = best_infogain
     return best_attr, best_split_value
     """
     Function to find the optimal attribute to split about.
