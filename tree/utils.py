@@ -13,7 +13,7 @@ def check_ifreal(y: pd.Series) -> bool:
     if not pd.api.types.is_numeric_dtype(y): return False
     else :
         if (y.nunique() > threshold): return True
-        else return False
+        else: return False
 
 def entropy(Y: pd.Series) -> float:
     class_counts = Y.value_counts()
