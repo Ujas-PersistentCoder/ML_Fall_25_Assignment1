@@ -19,9 +19,9 @@ plt.scatter(X[:, 0], X[:, 1], c=y)
 
 #Q2 a)
 
-X_df = pd.Dataframe(X)
+X_df = pd.DataFrame(X)
 y_s = pd.Series(y)
-X_train, X_test, y_train, y_test = train_test_split(X_df, y_s, test_size = 0.3, random_state = 07)
+X_train, X_test, y_train, y_test = train_test_split(X_df, y_s, test_size = 0.3, random_state = 7)
 tree = DecisionTree(criterion = "information_gain", max_depth = 5)
 tree.fit(X_train, y_train)
 y_hat = tree.predict(X_test)
@@ -30,5 +30,5 @@ print(f"Accuracy : {accuracy(y_hat, y_test):.2f}")
 for cls in y_test.unique():
     p = precision(y_hat, y_test, cls)
     r = recall(y_hat, y_test, cls)
-    print(f"Class {cls} - Precision: {p:.2f}, Recall: {r.2f}") 
+    print(f"Class {cls} - Precision: {p:.2f}, Recall: {r:.2f}") 
 
