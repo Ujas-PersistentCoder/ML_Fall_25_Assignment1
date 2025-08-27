@@ -31,7 +31,7 @@ for cls in y_test.unique():
     p = precision(y_hat, y_test, cls)
     r = recall(y_hat, y_test, cls)
     print(f"Class {cls} - Precision: {p:.2f}, Recall: {r:.2f}") 
-#sample results:
+
 """ 
 Results for Part(a)
 Accuracy : 0.87
@@ -75,3 +75,9 @@ mean_acc = np.mean(outer_loop_scores)
 std_acc = np.std(outer_loop_scores)
 print(f"Average accuracy across 5 folds : {mean_acc:.2f}")
 print(f"Standard Deviation of Accuracy: {std_acc:.2f}")
+
+"""
+Results for part (b)
+Average accuracy across 5 folds : 0.91
+Standard Deviation of Accuracy: 0.07
+"""
