@@ -44,3 +44,15 @@ sklearn_tree.fit(X_train, y_train)
 sklearn_y_hat = sklearn_tree.predict(X_test)
 sklearn_rmse = np.sqrt(mean_squared_error(sklearn_y_hat, y_test))
 print(f"Scikitlearn's Decision Tree's RMSE = {sklearn_rmse:.2f}")
+
+#output:
+"""
+My Decision Tree's RMSE = 3.59
+Scikitlearn's Decision Tree's RMSE = 3.90
+"""
+
+"""
+My tree might be working better than Scikit because scikit's implementation is more complex and optimized for speed.
+And it did take a significantly less time to run than my model. The dataset being small might have been the reason for
+my model performing slightly better
+"""
