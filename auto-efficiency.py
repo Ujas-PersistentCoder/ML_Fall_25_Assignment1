@@ -8,7 +8,7 @@ np.random.seed(42)
 
 # Reading the data
 url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data'
-data = pd.read_csv(url, delim_whitespace=True, header=None,
+data = pd.read_csv(url, sep = r'\s+', header=None,
                  names=["mpg", "cylinders", "displacement", "horsepower", "weight",
                         "acceleration", "model year", "origin", "car name"])
 
@@ -31,14 +31,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, rando
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error
 
-print("My Decision Tree")
+#My Decision Tree
 my_tree = DecisionTree(criterion = 'information_gain', max_depth = 5)
 my_tree.fit(X_train, y_train)
 my_y_hat = my_tree.predict(X_test)
 my_rmse = rmse(my_y_hat, y_test)
 print(f"My Decision Tree's RMSE = {my_rmse:.2f}")
 
-print("Scikitlearn's Decision Tree")
+#Scikitlearn's Decision Tree
 sklearn_tree = DecisionTreeRegressor(max_depth = 5, random_state = 7)
 sklearn_tree.fit(X_train, y_train)
 sklearn_y_hat = sklearn_tree.predict(X_test)
