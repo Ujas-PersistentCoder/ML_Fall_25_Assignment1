@@ -73,6 +73,5 @@ for train_index, test_index in outer_kfold.split(X_df):
     outer_loop_scores.append(outer_score)
 mean_acc = np.mean(outer_loop_scores)
 std_acc = np.std(outer_loop_scores)
-print("Final Results")
 print(f"Average accuracy across 5 folds : {mean_acc:.2f}")
 print(f"Standard Deviation of Accuracy: {std_acc:.2f}")
