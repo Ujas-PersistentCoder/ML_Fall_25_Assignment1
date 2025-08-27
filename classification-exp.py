@@ -66,7 +66,7 @@ for train_index, test_index in outer_kfold.split(X_df):
         if  avg_accuracy_curr_depth > best_avg_acc:
             best_avg_acc = avg_accuracy_curr_depth
             best_depth = depth
-    final_tree = DecisionTree(criterion = "information_gain", max_dpeth = best_depth)
+    final_tree = DecisionTree(criterion = "information_gain", max_depth = best_depth)
     final_tree.fit(X_outer_train, y_outer_train)
     y_final_hat = final_tree.predict(X_outer_test)
     outer_score = accuracy(y_final_hat, y_outer_test)
