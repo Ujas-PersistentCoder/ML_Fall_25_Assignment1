@@ -45,7 +45,7 @@ my_tree = DecisionTree(criterion = 'gini_index', max_depth = 5)
 my_tree.fit(X_train, y_train)
 my_y_hat = my_tree.predict(X_test)
 my_rmse = rmse(my_y_hat, y_test)
-print(f"My Decision Tree's RMSE(criterion = gini index) = {my_rmse:.2f}")
+print(f"My Decision Tree's RMSE(criterion = gini index)'s = {my_rmse:.2f}")
 
 #Scikitlearn's Decision Tree
 sklearn_tree = DecisionTreeRegressor(max_depth = 5, random_state = 7)
