@@ -11,15 +11,15 @@ num_average_time = 100  # Number of times to run each experiment to calculate th
 
 # Function to create fake data (take inspiration from usage.py)
 def generate_fake_data(n, m, input_type, output_type):
- if (input_type == 'discrete'):
-   X = pd.DataFrame(np.random.randint(2, size = (n, m)))
- else:
-   X = pd.DataFrame(np.random.randn(n, m))
- if (output_type == 'discrete'):
-   y = pd.Series(np.random.randint(2, size = n), dtype = "category")
- else:
-   y = pd.Series(np.random.randn(n))
- return X, y
+  if (input_type == 'discrete'):
+    X = pd.DataFrame(np.random.randint(2, size = (n, m)))
+  else:
+    X = pd.DataFrame(np.random.randn(n, m))
+  if (output_type == 'discrete'):
+    y = pd.Series(np.random.randint(2, size = n), dtype = "category")
+  else:
+    y = pd.Series(np.random.randn(n))
+  return X, y
 
 # Function to calculate average time (and std) taken by fit() and predict() for different N and P for 4 different cases of DTs
 def run_time_experiment(N_values, M_values, input_type, output_type, n):
