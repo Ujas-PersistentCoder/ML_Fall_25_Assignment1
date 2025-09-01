@@ -22,7 +22,7 @@ plt.scatter(X[:, 0], X[:, 1], c=y)
 X_df = pd.DataFrame(X)
 y_s = pd.Series(y)
 X_train, X_test, y_train, y_test = train_test_split(X_df, y_s, test_size = 0.3, random_state = 7)
-tree = DecisionTree(criterion = "information_gain", max_depth = 5)
+tree = DecisionTree(criterion = "entropy", max_depth = 5)
 tree.fit(X_train, y_train)
 y_hat = tree.predict(X_test)
 print("Results for Part(a)")
@@ -58,7 +58,7 @@ for train_index, test_index in outer_kfold.split(X_df):
         for inner_train_index, inner_eval_index in inner_kfold.split(X_outer_train):
             X_inner_train, X_inner_eval = X_outer_train.iloc[inner_train_index], X_outer_train.iloc[inner_eval_index]
             y_inner_train, y_inner_eval = y_outer_train.iloc[inner_train_index], y_outer_train.iloc[inner_eval_index]
-            tree = DecisionTree(criterion = "information_gain", max_depth = depth)
+            tree = DecisionTree(criterion = "entropy", max_depth = depth)
             tree.fit(X_inner_train, y_inner_train)
             y_hat = tree.predict(X_inner_eval)
             sum_inner_loop_scores += accuracy(y_hat, y_inner_eval)
@@ -66,7 +66,7 @@ for train_index, test_index in outer_kfold.split(X_df):
         if  avg_accuracy_curr_depth > best_avg_acc:
             best_avg_acc = avg_accuracy_curr_depth
             best_depth = depth
-    final_tree = DecisionTree(criterion = "information_gain", max_depth = best_depth)
+    final_tree = DecisionTree(criterion = "entropy", max_depth = best_depth)
     final_tree.fit(X_outer_train, y_outer_train)
     y_final_hat = final_tree.predict(X_outer_test)
     outer_score = accuracy(y_final_hat, y_outer_test)
