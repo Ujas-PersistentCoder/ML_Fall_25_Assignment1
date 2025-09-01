@@ -13,7 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tree.utils import *
 
-np.random.seed(42)
+np.random.seed(7)
 
 class Node:
     def __init__(self, value = None):
@@ -27,10 +27,12 @@ class Node:
         
 @dataclass
 class DecisionTree:
-    criterion: Literal["information_gain", "gini_index"]  # criterion won't be used for regression
+    criterion: Literal["entropy", "gini_index"]  # criterion won't be used for regression
     max_depth: int  # The maximum depth the tree can grow to
 
-    def __init__(self, criterion, max_depth=5):
+    def __init__(self, criterion: str = "entropy", max_depth: int = 5):
+        if criterion not in ["entropy", "gini_index"]:
+            raise ValueError("Criterion must be 'entropy' or 'gini_index'")
         self.criterion = criterion
         self.max_depth = max_depth
 
