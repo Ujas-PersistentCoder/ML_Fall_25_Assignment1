@@ -6,7 +6,7 @@ from tree.base import DecisionTree
 from metrics import *
 
 np.random.seed(7)
-num_average_time = 10  # Reduced for faster testing, you can increase it back to 100
+num_average_time = 100  # Reduced for faster testing, you can increase it back to 100
 
 # Function to create fake data
 def generate_fake_data(n, m, input_type, output_type):
@@ -26,7 +26,7 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
     avg_training_times_M, avg_prediction_times_M = [], []
     
     # --- Vary N ---
-    M_fixed = 15
+    M_fixed = 10
     total_N = len(N_values)
     # Use enumerate to get the iteration number (i)
     for i, N in enumerate(N_values):
@@ -50,7 +50,7 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
         avg_prediction_times_N.append(np.mean(temp_predict_times))
 
     # --- Vary M ---
-    N_fixed = 500
+    N_fixed = 50
     total_M = len(M_values)
     # Use enumerate to get the iteration number (i)
     for i, M in enumerate(M_values):
@@ -80,8 +80,8 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
     }
 
 # --- Main Script ---
-N_values = [50, 100, 200, 400, 800]
-M_values = [5, 10, 15, 20, 25]
+N_values = [10, 20, 40, 80, 160]
+M_values = [2, 5, 10, 15, 20]
 cases = {
     "Discrete In, Discrete Out": ("discrete", "discrete"),
     "Real In, Discrete Out": ("real", "discrete"),
