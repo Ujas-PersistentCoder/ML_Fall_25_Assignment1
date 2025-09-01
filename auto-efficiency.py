@@ -32,7 +32,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error
 
 #My Decision Tree
-my_tree = DecisionTree(criterion = 'information_gain', max_depth = 5)
+my_tree = DecisionTree(criterion = 'gini_index', max_depth = 5) #because sklearn uses gini index in its DecisionTreeRegressor
 my_tree.fit(X_train, y_train)
 my_y_hat = my_tree.predict(X_test)
 my_rmse = rmse(my_y_hat, y_test)
