@@ -25,12 +25,16 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
     avg_training_times_N, avg_prediction_times_N = [], []
     avg_training_times_M, avg_prediction_times_M = [], []
     
-    # Vary N
+    # --- Vary N ---
     M_fixed = 15
-    for N in N_values:
-        temp_train_times = []
-        temp_predict_times = []
-        for i in range(n_runs):
+    total_N = len(N_values)
+    # Use enumerate to get the iteration number (i)
+    for i, N in enumerate(N_values):
+        # Add this print statement for progress
+        print(f"  Varying N: Processing size {i+1}/{total_N} (N={N})")
+        
+        temp_train_times, temp_predict_times = [], []
+        for _ in range(n_runs):
             X, y = generate_fake_data(N, M_fixed, input_type, output_type)
             tree = DecisionTree(criterion="entropy", max_depth=5)
             
@@ -45,12 +49,16 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
         avg_training_times_N.append(np.mean(temp_train_times))
         avg_prediction_times_N.append(np.mean(temp_predict_times))
 
-    # Vary M
+    # --- Vary M ---
     N_fixed = 500
-    for M in M_values:
-        temp_train_times = []
-        temp_predict_times = []
-        for i in range(n_runs):
+    total_M = len(M_values)
+    # Use enumerate to get the iteration number (i)
+    for i, M in enumerate(M_values):
+        # Add this print statement for progress
+        print(f"  Varying M: Processing size {i+1}/{total_M} (M={M})")
+        
+        temp_train_times, temp_predict_times = [], []
+        for _ in range(n_runs):
             X, y = generate_fake_data(N_fixed, M, input_type, output_type)
             tree = DecisionTree(criterion="entropy", max_depth=5)
 
