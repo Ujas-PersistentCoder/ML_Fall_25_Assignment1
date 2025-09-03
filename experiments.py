@@ -28,13 +28,15 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
     # --- Vary N ---
     M_fixed = 10
     total_N = len(N_values)
-    # Use enumerate to get the iteration number (i)
     for i, N in enumerate(N_values):
-        # Add this print statement for progress
         print(f"  Varying N: Processing size {i+1}/{total_N} (N={N})")
         
         temp_train_times, temp_predict_times = [], []
-        for _ in range(n_runs):
+        # Add 'j' to the loop to track the run number
+        for j in range(n_runs):
+            # Add this print statement to show the current run
+            print(f"    - Run {j+1}/{n_runs}", end='\r', flush=True)
+            
             X, y = generate_fake_data(N, M_fixed, input_type, output_type)
             tree = DecisionTree(criterion="entropy", max_depth=5)
             
@@ -45,20 +47,24 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
             start = time.time()
             tree.predict(X)
             temp_predict_times.append(time.time() - start)
-            
+        
+        # Print a newline to finish the progress line
+        print() 
         avg_training_times_N.append(np.mean(temp_train_times))
         avg_prediction_times_N.append(np.mean(temp_predict_times))
 
     # --- Vary M ---
     N_fixed = 50
     total_M = len(M_values)
-    # Use enumerate to get the iteration number (i)
     for i, M in enumerate(M_values):
-        # Add this print statement for progress
         print(f"  Varying M: Processing size {i+1}/{total_M} (M={M})")
         
         temp_train_times, temp_predict_times = [], []
-        for _ in range(n_runs):
+        # Add 'j' to the loop to track the run number
+        for j in range(n_runs):
+            # Add this print statement to show the current run
+            print(f"    - Run {j+1}/{n_runs}", end='\r', flush=True)
+            
             X, y = generate_fake_data(N_fixed, M, input_type, output_type)
             tree = DecisionTree(criterion="entropy", max_depth=5)
 
@@ -70,6 +76,8 @@ def run_time_experiment(N_values, M_values, input_type, output_type, n_runs):
             tree.predict(X)
             temp_predict_times.append(time.time() - start)
             
+        # Print a newline to finish the progress line
+        print()
         avg_training_times_M.append(np.mean(temp_train_times))
         avg_prediction_times_M.append(np.mean(temp_predict_times))
         
