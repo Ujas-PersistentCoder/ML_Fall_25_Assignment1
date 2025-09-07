@@ -82,5 +82,19 @@ print("Training data shape: ",X_train.shape)
 print("Testing data shape: ",X_test.shape)
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#                                 # Save the Final Dataset
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+# Create the 'Dataset' folder if it doesn't already exist
+if not os.path.exists('Dataset'):
+    os.makedirs('Dataset')
+
+# Save the final arrays into the 'Dataset' folder as .npy files
+np.save('Dataset/X_train.npy', X_train)
+np.save('Dataset/y_train.npy', y_train)
+np.save('Dataset/X_test.npy', X_test)
+np.save('Dataset/y_test.npy', y_test)
+
+print("\nFinal dataset successfully created and saved in the 'Dataset' folder.")
 
